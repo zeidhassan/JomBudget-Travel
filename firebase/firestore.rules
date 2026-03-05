@@ -1,0 +1,149 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function hasProfile() {
+      return signedIn() &&
+        exists(/databases/$(database)/documents/users/$(request.auth.uid));
+    }
+
+    function role() {
+      return hasProfile()
+        ? get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role
+        : null;
+    }
+
+    function legacyId() {
+      return hasProfile() &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.legacyId is string
+        ? get(/databases/$(database)/documents/users/$(request.auth.uid)).data.legacyId
+        : request.auth.uid;
+    }
+
+    function isAdmin() {
+      return signedIn() && role() == 'admin';
+    }
+
+    function isVendor() {
+      return signedIn() && role() == 'vendor';
+    }
+
+    function isTraveler() {
+      return signedIn() && role() == 'traveler';
+    }
+
+    function isVendorOfListing(listingId) {
+      return isVendor() &&
+        exists(/databases/$(database)/documents/listings/$(listingId)) &&
+        get(/databases/$(database)/documents/listings/$(listingId)).data.vendorId == legacyId();
+    }
+
+    match /users/{userId} {
+      allow read: if signedIn() && (request.auth.uid == userId || isAdmin());
+      allow create: if signedIn() && request.auth.uid == userId;
+      allow update: if signedIn() && (request.auth.uid == userId || isAdmin());
+      allow delete: if isAdmin();
+    }
+
+    match /listings/{listingId} {
+      allow read: if true;
+      allow create: if isVendor();
+      allow update: if isAdmin() || (
+        isVendor() &&
+        resource.data.vendorId == legacyId() &&
+        request.resource.data.vendorId == resource.data.vendorId
+      );
+      allow delete: if isAdmin();
+    }
+
+    match /bookings/{bookingId} {
+      allow read: if signedIn() && (
+        isAdmin() ||
+        resource.data.travelerId == legacyId() ||
+        resource.data.vendorId == legacyId()
+      );
+      allow create: if isTraveler() &&
+        request.resource.data.travelerId == legacyId();
+      allow update: if isAdmin() ||
+        (isTraveler() && resource.data.travelerId == legacyId()) ||
+        (isVendor() && resource.data.vendorId == legacyId());
+      allow delete: if isAdmin();
+    }
+
+    match /payments_mock/{paymentId} {
+      allow read: if signedIn();
+      allow write: if isAdmin();
+    }
+
+    match /destinations/{destinationId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /availability/{availabilityId} {
+      allow read: if true;
+      allow create: if isAdmin() || isVendorOfListing(request.resource.data.listingId);
+      allow update: if isAdmin() || (
+        isVendorOfListing(resource.data.listingId) &&
+        request.resource.data.listingId == resource.data.listingId
+      );
+      allow delete: if isAdmin() || isVendorOfListing(resource.data.listingId);
+    }
+
+    match /inquiries/{inquiryId} {
+      allow read: if signedIn() && (
+        isAdmin() ||
+        resource.data.travelerId == legacyId() ||
+        resource.data.vendorId == legacyId() ||
+        resource.data.isPublic == true
+      );
+      allow create: if isTraveler() &&
+        request.resource.data.travelerId == legacyId();
+      allow update: if isAdmin() ||
+        (isVendor() && resource.data.vendorId == legacyId()) ||
+        (
+          isTraveler() &&
+          resource.data.travelerId == legacyId() &&
+          request.resource.data.travelerId == legacyId() &&
+          request.resource.data.answer == resource.data.answer
+        );
+      allow delete: if isAdmin();
+    }
+
+    match /reviews/{reviewId} {
+      allow read: if true;
+      allow create: if isTraveler() &&
+        request.resource.data.travelerId == legacyId();
+      allow update: if isAdmin() || isVendor();
+      allow delete: if isAdmin();
+    }
+
+    match /itineraries/{itineraryId} {
+      allow read: if signedIn() && (
+        isAdmin() ||
+        resource.data.travelerId == legacyId()
+      );
+      allow create: if isTraveler() &&
+        request.resource.data.travelerId == legacyId();
+      allow update, delete: if isAdmin() || (
+        isTraveler() &&
+        resource.data.travelerId == legacyId()
+      );
+    }
+
+    match /notifications/{notificationId} {
+      allow read, update: if signedIn() && (
+        isAdmin() || resource.data.userId == legacyId()
+      );
+      allow create: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    match /reports/{reportId} {
+      allow read, write: if isAdmin();
+    }
+  }
+}
