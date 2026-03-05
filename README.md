@@ -50,11 +50,11 @@ Screenshots are stored in `assets/screenshots/`.
 - `04_traveler_booking_receipt.png`
 - `05_traveler_bookings.png`
 
-![Login Screen](assets/screenshots/01_login_screen.png)
-![Traveler Browse](assets/screenshots/02_traveler_browse.png)
-![Traveler Planner Result](assets/screenshots/03_traveler_planner_result.png)
-![Traveler Booking Receipt](assets/screenshots/04_traveler_booking_receipt.png)
-![Traveler Bookings](assets/screenshots/05_traveler_bookings.png)
+<img src="assets/screenshots/01_login_screen.png" alt="Login Screen" width="280" />
+<img src="assets/screenshots/02_traveler_browse.png" alt="Traveler Browse" width="280" />
+<img src="assets/screenshots/03_traveler_planner_result.png" alt="Traveler Planner Result" width="280" />
+<img src="assets/screenshots/04_traveler_booking_receipt.png" alt="Traveler Booking Receipt" width="280" />
+<img src="assets/screenshots/05_traveler_bookings.png" alt="Traveler Bookings" width="280" />
 
 ### Vendor Flow
 
@@ -62,9 +62,9 @@ Screenshots are stored in `assets/screenshots/`.
 - `07_vendor_bookings.png`
 - `08_vendor_feedback.png`
 
-![Vendor Listings](assets/screenshots/06_vendor_listings.png)
-![Vendor Bookings](assets/screenshots/07_vendor_bookings.png)
-![Vendor Feedback](assets/screenshots/08_vendor_feedback.png)
+<img src="assets/screenshots/06_vendor_listings.png" alt="Vendor Listings" width="280" />
+<img src="assets/screenshots/07_vendor_bookings.png" alt="Vendor Bookings" width="280" />
+<img src="assets/screenshots/08_vendor_feedback.png" alt="Vendor Feedback" width="280" />
 
 ### Admin Flow
 
@@ -74,11 +74,11 @@ Screenshots are stored in `assets/screenshots/`.
 - `12_admin_bookings_moderation.png`
 - `13_admin_reports.png`
 
-![Admin User Moderation](assets/screenshots/09_admin_user_moderation.png)
-![Admin Listing Moderation](assets/screenshots/10_admin_listing_moderation.png)
-![Admin Destination Moderation](assets/screenshots/11_admin_destination_moderation.png)
-![Admin Bookings Moderation](assets/screenshots/12_admin_bookings_moderation.png)
-![Admin Reports](assets/screenshots/13_admin_reports.png)
+<img src="assets/screenshots/09_admin_user_moderation.png" alt="Admin User Moderation" width="280" />
+<img src="assets/screenshots/10_admin_listing_moderation.png" alt="Admin Listing Moderation" width="280" />
+<img src="assets/screenshots/11_admin_destination_moderation.png" alt="Admin Destination Moderation" width="280" />
+<img src="assets/screenshots/12_admin_bookings_moderation.png" alt="Admin Bookings Moderation" width="280" />
+<img src="assets/screenshots/13_admin_reports.png" alt="Admin Reports" width="280" />
 
 ## Tech Stack
 
