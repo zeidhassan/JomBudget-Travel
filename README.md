@@ -38,6 +38,48 @@ It implements traveler, vendor, and admin workflows with a deterministic budget 
 - Vendor 3: `vendor@borneo.my` / `pass123`
 - Admin: `admin@jombudget.my` / `pass123`
 
+## App Screenshots
+
+Screenshots are stored in `assets/screenshots/`.
+
+### Authentication and Traveler Flow
+
+- `01_login_screen.png`
+- `02_traveler_browse.png`
+- `03_traveler_planner_result.png`
+- `04_traveler_booking_receipt.png`
+- `05_traveler_bookings.png`
+
+![Login Screen](assets/screenshots/01_login_screen.png)
+![Traveler Browse](assets/screenshots/02_traveler_browse.png)
+![Traveler Planner Result](assets/screenshots/03_traveler_planner_result.png)
+![Traveler Booking Receipt](assets/screenshots/04_traveler_booking_receipt.png)
+![Traveler Bookings](assets/screenshots/05_traveler_bookings.png)
+
+### Vendor Flow
+
+- `06_vendor_listings.png`
+- `07_vendor_bookings.png`
+- `08_vendor_feedback.png`
+
+![Vendor Listings](assets/screenshots/06_vendor_listings.png)
+![Vendor Bookings](assets/screenshots/07_vendor_bookings.png)
+![Vendor Feedback](assets/screenshots/08_vendor_feedback.png)
+
+### Admin Flow
+
+- `09_admin_user_moderation.png`
+- `10_admin_listing_moderation.png`
+- `11_admin_destination_moderation.png`
+- `12_admin_bookings_moderation.png`
+- `13_admin_reports.png`
+
+![Admin User Moderation](assets/screenshots/09_admin_user_moderation.png)
+![Admin Listing Moderation](assets/screenshots/10_admin_listing_moderation.png)
+![Admin Destination Moderation](assets/screenshots/11_admin_destination_moderation.png)
+![Admin Bookings Moderation](assets/screenshots/12_admin_bookings_moderation.png)
+![Admin Reports](assets/screenshots/13_admin_reports.png)
+
 ## Tech Stack
 
 - Flutter (Material 3)
