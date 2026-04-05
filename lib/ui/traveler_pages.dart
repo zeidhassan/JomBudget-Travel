@@ -598,32 +598,41 @@ class _TravelerBrowsePageState extends State<_TravelerBrowsePage> {
                                   .toList(),
                             ),
                             const SizedBox(height: 6),
-                            Row(
-                              children: <Widget>[
-                                Text(formatMoney(listing.priceBase)),
-                                const SizedBox(width: 10),
-                                Icon(
-                                  Icons.star,
-                                  size: 18,
-                                  color: Colors.amber.shade700,
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(formatMoney(listing.priceBase)),
+                                    const SizedBox(width: 10),
+                                    Icon(
+                                      Icons.star,
+                                      size: 18,
+                                      color: Colors.amber.shade700,
+                                    ),
+                                    const SizedBox(width: 2),
+                                    Text(listing.ratingAvg.toStringAsFixed(1)),
+                                  ],
                                 ),
-                                const SizedBox(width: 2),
-                                Text(listing.ratingAvg.toStringAsFixed(1)),
-                                const Spacer(),
-                                TextButton(
-                                  onPressed: () =>
-                                      _openReviewsDialog(context, listing),
-                                  child: Text('Reviews (${reviews.length})'),
-                                ),
-                                TextButton(
-                                  onPressed: () =>
-                                      _openInquiryDialog(context, listing),
-                                  child: Text('Q&A (${inquiries.length})'),
-                                ),
-                                FilledButton(
-                                  onPressed: () =>
-                                      _bookListing(context, listing),
-                                  child: const Text('Book'),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          _openReviewsDialog(context, listing),
+                                      child: Text('Reviews (${reviews.length})'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () =>
+                                          _openInquiryDialog(context, listing),
+                                      child: Text('Q&A (${inquiries.length})'),
+                                    ),
+                                    FilledButton(
+                                      onPressed: () =>
+                                          _bookListing(context, listing),
+                                      child: const Text('Book'),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
