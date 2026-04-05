@@ -3,6 +3,8 @@
 JomBudget is a role-based Flutter mobile app prototype for **student budget travel planning in Malaysia**.
 It implements traveler, vendor, and admin workflows with a deterministic budget optimizer, mock checkout, booking lifecycle management, and moderation/reporting tools.
 
+> See [USER_MANUAL.md](USER_MANUAL.md) for a full walkthrough of all features across all three roles.
+
 ## Implemented Scope
 
 - Single app with role-based login and routing.
@@ -44,12 +46,6 @@ Screenshots are stored in `assets/screenshots/`.
 
 ### Authentication and Traveler Flow
 
-- `01_login_screen.png`
-- `02_traveler_browse.png`
-- `03_traveler_planner_result.png`
-- `04_traveler_booking_receipt.png`
-- `05_traveler_bookings.png`
-
 <img src="assets/screenshots/01_login_screen.png" alt="Login Screen" width="280" />
 <img src="assets/screenshots/02_traveler_browse.png" alt="Traveler Browse" width="280" />
 <img src="assets/screenshots/03_traveler_planner_result.png" alt="Traveler Planner Result" width="280" />
@@ -58,21 +54,11 @@ Screenshots are stored in `assets/screenshots/`.
 
 ### Vendor Flow
 
-- `06_vendor_listings.png`
-- `07_vendor_bookings.png`
-- `08_vendor_feedback.png`
-
 <img src="assets/screenshots/06_vendor_listings.png" alt="Vendor Listings" width="280" />
 <img src="assets/screenshots/07_vendor_bookings.png" alt="Vendor Bookings" width="280" />
 <img src="assets/screenshots/08_vendor_feedback.png" alt="Vendor Feedback" width="280" />
 
 ### Admin Flow
-
-- `09_admin_user_moderation.png`
-- `10_admin_listing_moderation.png`
-- `11_admin_destination_moderation.png`
-- `12_admin_bookings_moderation.png`
-- `13_admin_reports.png`
 
 <img src="assets/screenshots/09_admin_user_moderation.png" alt="Admin User Moderation" width="280" />
 <img src="assets/screenshots/10_admin_listing_moderation.png" alt="Admin Listing Moderation" width="280" />
@@ -85,10 +71,11 @@ Screenshots are stored in `assets/screenshots/`.
 - Flutter (Material 3)
 - State management: `provider`
 - In-memory repositories with service layer abstraction + local snapshot persistence (`shared_preferences`)
-- Firebase backend integration (opt-in via build flag):
+- Firebase (Authentication, Firestore, Storage):
   - `firebase/firestore.rules`
   - `firebase/firestore.indexes.json`
   - `functions/index.js` (Cloud Functions template)
+  - `firebase/seed_firestore.js` (seed script for demo data)
 
 ## Project Structure
 
@@ -97,7 +84,7 @@ Screenshots are stored in `assets/screenshots/`.
 - `lib/services/`: auth, itinerary, booking, notification, admin services.
 - `lib/state/app_state.dart`: app orchestration and role actions.
 - `lib/ui/`: auth + traveler/vendor/admin screens.
-- `firebase/`: Firestore security/index templates.
+- `firebase/`: Firestore rules, indexes, and seed script.
 - `functions/`: Node Cloud Functions templates.
 
 ## Run
@@ -107,35 +94,39 @@ flutter pub get
 flutter run
 ```
 
-To enable Firebase runtime sync (when Firebase is configured):
+Build APK:
 
 ```bash
-flutter run --dart-define=USE_FIREBASE=true
-```
-
-Build APK (without Firebase):
-
-```bash
-flutter build apk --debug
-```
-
-Build APK (with Firebase):
-
-```bash
-flutter build apk --debug --dart-define=USE_FIREBASE=true
+flutter build apk --release
 ```
 
 ## Notes
 
-- Current app runtime uses in-memory seeded data for deterministic demo behavior.
-- App writes a local snapshot so data changes persist across restarts (bookings, reviews, inquiries, destinations, etc.).
-- With `USE_FIREBASE=true`, app also subscribes to Firestore updates for cross-device sync of supported collections.
-- Demo images are bundled offline under `assets/demo_images/` so image previews work without internet.
-- Firebase files are provided to support transition to real backend deployment.
+- App uses Firebase by default. Requires `lib/firebase_options.dart` and `android/app/google-services.json` (not tracked — obtain from Firebase Console).
+- Falls back to in-memory seeded data if Firebase is unavailable.
+- Local snapshot persistence means data changes (bookings, reviews, etc.) survive app restarts even without Firebase.
+- Demo images are bundled under `assets/demo_images/` so listing previews work offline.
+- To seed Firestore with demo data and images: `cd firebase && node seed_firestore.js` (requires `firebase/serviceAccountKey.json`).
 
 ## Automated Testing
 
+Unit and widget tests:
+
+```bash
+flutter test test/services/booking_service_test.dart
+flutter test test/services/itinerary_service_test.dart
+flutter test test/widgets/role_routing_test.dart
+flutter test test/widgets/booking_flow_test.dart
+```
+
+Run all unit/widget tests at once:
+
 ```bash
 flutter test
+```
+
+Integration test:
+
+```bash
 flutter test integration_test/login_flow_test.dart -d linux
 ```
