@@ -13,7 +13,14 @@ class AuthScreen extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('JomBudget'),
+          title: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Image.asset('assets/logo.png', height: 32),
+              const SizedBox(width: 8),
+              const Text('JomBudget'),
+            ],
+          ),
           bottom: const TabBar(
             tabs: <Tab>[
               Tab(text: 'Login'),
