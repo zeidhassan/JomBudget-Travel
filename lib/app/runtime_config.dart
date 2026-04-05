@@ -11,7 +11,7 @@ class AppRuntimeConfig {
 Future<AppRuntimeConfig> initializeRuntimeConfig() async {
   const shouldTryFirebase = bool.fromEnvironment(
     'USE_FIREBASE',
-    defaultValue: false,
+    defaultValue: true,
   );
 
   if (!shouldTryFirebase) {

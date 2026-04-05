@@ -80,31 +80,6 @@ class _LoginTabState extends State<_LoginTab> {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: <Widget>[
-        const Text(
-          'Login credentials for demo',
-          style: TextStyle(fontWeight: FontWeight.w700),
-        ),
-        const SizedBox(height: 8),
-        const Card(
-          child: Padding(
-            padding: EdgeInsets.all(12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text('Traveler: traveler@student.my / pass123'),
-                SizedBox(height: 4),
-                Text('Traveler 2: irfan@student.my / pass123'),
-                SizedBox(height: 4),
-                Text('Vendor: vendor@langkawi.my / pass123'),
-                SizedBox(height: 4),
-                Text('Vendor 2: vendor@klfood.my / pass123'),
-                SizedBox(height: 4),
-                Text('Admin: admin@jombudget.my / pass123'),
-              ],
-            ),
-          ),
-        ),
-        const SizedBox(height: 12),
         TextField(
           controller: _emailController,
           keyboardType: TextInputType.emailAddress,
@@ -198,7 +173,7 @@ class _RegisterTabState extends State<_RegisterTab> {
         DropdownButtonFormField<UserRole>(
           value: _role,
           decoration: const InputDecoration(labelText: 'Role'),
-          items: UserRole.values
+          items: [UserRole.traveler, UserRole.vendor]
               .map(
                 (role) => DropdownMenuItem<UserRole>(
                   value: role,

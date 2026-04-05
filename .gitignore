@@ -70,3 +70,7 @@ macos/Runner/GoogleService-Info.plist
 android/key.properties
 **/*.jks
 **/*.keystore
+
+# Firebase service account (contains private keys — never commit)
+firebase/serviceAccountKey.json
+**/serviceAccountKey.json
